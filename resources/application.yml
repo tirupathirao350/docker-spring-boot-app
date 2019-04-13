@@ -1,0 +1,49 @@
+server:
+  port: ${server_port:8086}
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: ${eureka_url:http://eureka-server:8761/eureka/}
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
+
+spring:
+  application:
+    name: bank-service
+  devtools:
+    remote:
+      secret: mysecret
+
+management:
+  security:
+    enabled: false
+
+kafka:
+  bootstrap-servers: localhost:9092
+  topic: test
+#spring:
+#  application:
+#    name: account-service
+#
+#server:
+#  port: 8089
+#
+#eureka:
+#  client:
+#    registerWithEureka: true
+#    fetchRegistry: true
+#    serviceUrl:
+#      defaultZone: http://127.0.0.1:8761/eureka/
+#  instance:
+#    hostname: localhost
+#    preferIpAddress: true
+#
+#ribbon:
+#  eureka:
+#    enabled: true
