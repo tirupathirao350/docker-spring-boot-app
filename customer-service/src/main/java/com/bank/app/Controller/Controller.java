@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/Customer")
+@RequestMapping("/customer")
 public class Controller {
 
     private static final String Topic = "test";

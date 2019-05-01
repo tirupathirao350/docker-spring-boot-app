@@ -13,3 +13,22 @@ spring:
 management:
   security:
     enabled: false
+
+zuul:
+  routes:
+    bank-service:
+      path: /bank/**
+      url: http://localhost:8085/bank
+    branch-service:
+      path: /branch/**
+      url: http://localhost:8086/branch
+    customer-service:
+      path: /customer/**
+      url: http://localhost:8087/customer
+    transaction-service:
+      path: /transaction/**
+      url: http://localhost:8088/transaction
+    account-service:
+      path: /account/**
+      url: http://localhost:8089/account
+

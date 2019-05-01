@@ -1,4 +1,4 @@
-/*
+package com.bank.app.util;/*
 package com.bank.app.util;
 
 import com.bank.app.domain.Bank;

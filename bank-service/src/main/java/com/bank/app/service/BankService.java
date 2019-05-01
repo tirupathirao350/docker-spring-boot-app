@@ -15,8 +15,6 @@ public interface BankService {
 
     public abstract boolean saveBank(Bank bank);
 
-    public abstract boolean updateBank(Bank bank);
-
     public abstract void deleteBank(int bankId);
 
     public abstract List<Bank> getAllBanks();

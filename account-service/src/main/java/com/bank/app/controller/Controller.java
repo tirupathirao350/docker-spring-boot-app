@@ -51,7 +51,7 @@ public class Controller {
 
     @RequestMapping(value = "/insertAccount", method = RequestMethod.POST)
     public String insertAccount(@RequestBody Account account) {
-        String str = accountServiceImpl.createAccount(account);
+        String str = accountServiceImpl.saveAccount(account);
 		/*if(str != null) {
 			 producer.sendAccount(account);
 		}*/
@@ -59,8 +59,9 @@ public class Controller {
     }
 
     @RequestMapping(value = "/updateAccount", method = RequestMethod.PUT)
-    public HttpStatus updateCustomer(@RequestBody Account account) {
-        return accountServiceImpl.updateAccount(account) ? HttpStatus.LOCKED : HttpStatus.BAD_REQUEST;
+    public String updateCustomer(@RequestBody Account account) {
+        String updateAcc = accountServiceImpl.saveAccount(account);
+        return updateAcc;
     }
 
     @RequestMapping(value = "/deleteAccountById/{id}", method = RequestMethod.DELETE)

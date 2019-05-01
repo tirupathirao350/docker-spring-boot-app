@@ -19,7 +19,7 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepo;
 
     @Transactional
-    public String createAccount(Account account) {
+    public String saveAccount(Account account) {
         String status = "";
         // TODO Auto-generated method stub
         String s = String.valueOf(accountRepo.findExistingAccountType(account.getCustomer().getCustomerId()));
@@ -51,12 +51,6 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public Account getAccountInfo(int accountId) {
         return accountRepo.getOne(accountId);
-    }
-
-    @Transactional
-    public boolean updateAccount(Account account) {
-        // TODO Auto-generated method stub
-        return accountRepo.save(account) != null;
     }
 
     @Transactional

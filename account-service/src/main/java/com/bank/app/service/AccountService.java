@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AccountService {
 
-    public abstract String createAccount(Account account);
+    public abstract String saveAccount(Account account);
 
     public abstract String getAccountById(int id);
 
@@ -15,7 +15,7 @@ public interface AccountService {
 
     //public Account getAccountById(int accountId);
 
-    public abstract boolean updateAccount(Account account);
+   // public abstract boolean updateAccount(Account account);
 
     public abstract void deleteAccount(int accountId);
 

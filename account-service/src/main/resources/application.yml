@@ -4,7 +4,7 @@
 #eureka:
 #  client:
 #    serviceUrl:
-#      defaultZone: http://eureka-server:8765/eureka/
+#      defaultZone: http://eureka-server:8761/eureka/
 #
 #spring:
 #  application:

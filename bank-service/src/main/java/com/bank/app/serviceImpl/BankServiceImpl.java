@@ -40,13 +40,6 @@ public class BankServiceImpl implements BankService {
 
     @Transactional
     public boolean saveBank(Bank bank) {
-
-        return bankRepo.save(bank) != null;
-
-    }
-
-    @Transactional
-    public boolean updateBank(Bank bank) {
         return bankRepo.save(bank) != null;
     }
 

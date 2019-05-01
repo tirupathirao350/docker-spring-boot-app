@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @RestController
-@RequestMapping("/branchlist")
+@RequestMapping("/branch")
 @JsonIgnoreProperties
 public class BranchController {
 /*

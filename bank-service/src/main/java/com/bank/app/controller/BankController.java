@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/banklist")
+@RequestMapping("/bank")
 public class BankController {
     private static final Logger logger = LogManager.getLogger(BankController.class.getName());
     private static final String Topic = "test";
@@ -60,7 +60,7 @@ public class BankController {
     @RequestMapping(value = "/updateBank", method = RequestMethod.PUT)
     public HttpStatus updateBank(@RequestBody Bank bank) {
       //  consumer.receive(bank.toString());
-        return bankServiceImpl.updateBank(bank) ? HttpStatus.LOCKED : HttpStatus.BAD_REQUEST;
+        return bankServiceImpl.saveBank(bank) ? HttpStatus.LOCKED : HttpStatus.BAD_REQUEST;
     }
 
     @RequestMapping(value = "/deleteBankById/{bankId}", method = RequestMethod.DELETE)

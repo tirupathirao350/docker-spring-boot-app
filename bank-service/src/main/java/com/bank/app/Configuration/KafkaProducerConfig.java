@@ -1,4 +1,4 @@
-/*
+package com.bank.app.Configuration;/*
 package com.bank.app.Configuration;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
