@@ -1,12 +1,16 @@
 package com.bank.app.controller;
 
 import java.util.Collection;
+import java.util.List;
 
+import com.bank.app.domain.Bank;
+import com.bank.app.repository.BranchServiceProxy;
 import com.bank.app.serviceImpl.BranchServiceImpl;
 import com.bank.app.domain.Branch;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @RestController
 @RequestMapping("/branch")
 @JsonIgnoreProperties
+@RefreshScope
 public class BranchController {
 /*
 	@Autowired
@@ -31,11 +36,15 @@ public class BranchController {
     Branch branch = new Branch();
 
     @Autowired
+    BranchServiceProxy branchServiceProxy;
+
+    @Autowired
     private BranchServiceImpl branchServiceImpl;
 
     @RequestMapping(value = "/getBranchById/{branchCode}", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
     public String getBranchById(@PathVariable Integer branchCode) throws JSONException {
+        Collection<Bank> list = branchServiceProxy.findAll();
         String branch = branchServiceImpl.getBranchById(branchCode);
         return branch;
     }
