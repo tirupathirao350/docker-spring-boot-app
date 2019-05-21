@@ -21,7 +21,7 @@ public interface BranchRepository extends JpaRepository<Branch, Integer> {
     @Query("DELETE FROM Branch WHERE (branch_code = :branch_code)")
     void deleteBranch(@Param("branch_code") int branchCode);
 
-    @Query(value = "SELECT * from Branch",
+    @Query(value = "SELECT * from branch",
             nativeQuery = true)
     Collection<Branch> findAllActiveUsersNative();
 }
