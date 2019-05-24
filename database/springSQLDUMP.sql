@@ -1,5 +1,3 @@
-CREATE SCHEMA `spring_app_db` ;
-
 use spring_app_db ;
 
 DROP TABLE IF EXISTS `bank`;

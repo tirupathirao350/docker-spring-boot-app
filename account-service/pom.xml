@@ -6,7 +6,6 @@
         <groupId>com.bank.app</groupId>
         <artifactId>bank-application</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.bank.app</groupId>
     <artifactId>account-service</artifactId>
