@@ -11,8 +11,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.5.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>2.0.4.RELEASE</version>
 	</parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,6 +20,8 @@
 		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
 	</properties>
     <modules>
+		<module>eureka-server</module>
+		<module>zuul-service</module>
 		<module>account-service</module>
 		<module>bank-service</module>
 		<module>branch-service</module>
