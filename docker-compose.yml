@@ -33,7 +33,7 @@ services:
       - MYSQL_PASSWORD=test123
       - MYSQL_DATABASE=spring_app_db
     volumes:
-       - ./database: /docker-entrypoint-initdb.d
+       - ./database:/docker-entrypoint-initdb.d
     restart: always
   account-service:
     image: account-service:latest
