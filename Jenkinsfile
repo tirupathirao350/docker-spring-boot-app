@@ -2,33 +2,41 @@ pipeline {
   agent any
   tools { 
         maven 'Maven'
-        jdk 'Java'
+        jdk 'JAVA_HOME'
   }
   stages {
     stage('Clone repository') {
         /* Let's make sure we have the repository cloned to our workspace... */
       steps {
         checkout scm
-      }
+        sh 'git checkout -b feature-1.1'
+        sh 'git pull origin feature-1.1'
+        }
     }
-    stage('Build') {
+    stage('Install docker and docker-compose') {
+          steps {
+            sh 'sudo yum update'
+            sh 'sudo yum install -y docker'
+            sh 'sudo systemctl start docker'
+            sh 'sudo setfacl -m user:ec2-user:rw /var/run/docker.sock'
+            sh 'sudo curl -L https://github.com/docker/compose/releases/download/1.20.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose'
+            sh 'sudo chmod +x /usr/local/bin/docker-compose'
+            sh 'sudo chkconfig docker on'
+            sh 'sudo service docker start'
+            sh 'sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose'
+          }
+        }
+    stage('Build Project and Generate Docker Images') {
       steps {
         sh 'mvn -B -DskipTests clean package'
         sh 'echo $USER'
         sh 'echo whoami'
       }
     }
-    stage('Docker Build') {
+    stage('Run docker images with docker-compose') {
       steps {
-        sh '/usr/bin/docker build -t satheeshch/bank-customer-service:latest .'
-      }
-    }
-    stage('Push image') {
-      steps {
-        withDockerRegistry([credentialsId: 'docker-hub', url: "https://index.docker.io/v1/"]) {
-          sh '/usr/bin/docker push satheeshch/bank-customer-service:latest'
-        }
-      }
+              sh 'docker-compose up'
+            }
     }
   }
 }
