@@ -13,7 +13,7 @@ pipeline {
     }
     stage('Install docker and docker-compose') {
           steps {
-            sh 'sudo yum update'
+            sh 'sudo yum -y update'
             sh 'sudo yum install -y docker'
             sh 'sudo systemctl start docker'
             sh 'sudo setfacl -m user:ec2-user:rw /var/run/docker.sock'
