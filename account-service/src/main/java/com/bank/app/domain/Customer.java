@@ -117,11 +117,23 @@ public class Customer {
         this.accountSet = accountSet;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "Customer [customerId=" + customerId + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
                 + email + ", contactNumber=" + contactNumber + ", aadharNumber=" + aadharNumber + ", branchCode="
                 + branchCode + ", accountSet=" + accountSet + "]";
+    }*/
+    @Override
+    public String toString() {
+        return "{" +
+                "customerId=" + customerId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", contactNumber=" + contactNumber +
+                ", aadharNumber='" + aadharNumber + '\'' +
+                ", branchCode=" + branchCode +
+                '}';
     }
 
 

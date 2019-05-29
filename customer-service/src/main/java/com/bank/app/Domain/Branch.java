@@ -74,4 +74,13 @@ public class Branch {
     public void setCustomerList(List<Customer> customerList) {
         this.customerList = customerList;
     }
+
+    @Override
+    public String toString() {
+        return " {" +
+                "branchCode:" + branchCode +
+                ", branchName:'" + branchName + '\'' +
+                ", branchType:'" + branchType + '\'' +
+                '}';
+    }
 }

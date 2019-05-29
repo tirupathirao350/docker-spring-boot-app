@@ -113,10 +113,11 @@ public class Branch {
 
     @Override
     public String toString() {
-        return "{" +
+        return " {" +
                 "branchCode:" + branchCode +
                 ", branchName:'" + branchName + '\'' +
                 ", branchType:'" + branchType + '\'' +
+                ", bank:" + bank  +
                 ", address:" + address +
                 '}';
     }

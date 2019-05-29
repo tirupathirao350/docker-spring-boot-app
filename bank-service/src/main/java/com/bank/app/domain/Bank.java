@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "bank")
 @Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Bank {
+public class Bank implements Serializable {
 
     @Id
     private int bankId;
@@ -68,5 +69,11 @@ public class Bank {
                 "bankId=" + bankId + ", name=" + name + '}';
     }
 
-
+   /* public String toString1() {
+        return "Bank{" +
+                "bankId=" + bankId +
+                ", name='" + name + '\'' +
+                ", branchList=" + branchList +
+                '}';
+    }*/
 }
