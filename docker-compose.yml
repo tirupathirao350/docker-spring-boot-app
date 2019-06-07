@@ -1,4 +1,4 @@
-version: '3.3'
+version: '2.2'
 services:
   eureka-server:
     image: eureka-server
@@ -17,7 +17,7 @@ services:
       "eureka.server.enableSelfPreservation": "false",
       "eureka.server.maxThreadsForPeerReplication": "0"
       }'
-    restart: always
+    restart: on-failure
   mysql-container:
     image: mysql:8.0.15
     ports:
@@ -34,14 +34,16 @@ services:
       - MYSQL_DATABASE=spring_app_db
     volumes:
        - ./database:/docker-entrypoint-initdb.d
-    restart: always
+    restart: on-failure
   account-service:
     image: account-service:latest
     ports:
       - 8089:8089
     depends_on:
-     - eureka-server
-     - mysql-container
+      eureka-server:
+        condition: service_healthy
+      mysql-container:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_JSON: '{
       "flyway.enabled": "true",
@@ -60,14 +62,16 @@ services:
       "eureka.client.registerWithEureka": "true",
       "eureka.client.fetchRegistry": "true"
       }'
-    restart: always
+    restart: on-failure
   bank-service:
     image: bank-service:latest
     ports:
       - 8085:8085
     depends_on:
-      - mysql-container
-      - eureka-server
+      eureka-server:
+        condition: service_healthy
+      mysql-container:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_JSON: '{
       "flyway.enabled": "true",
@@ -86,14 +90,16 @@ services:
       "eureka.client.registerWithEureka": "true",
       "eureka.client.fetchRegistry": "true"
       }'
-    restart: always
+    restart: on-failure
   branch-service:
     image: branch-service:latest
     ports:
       - 8086:8086
     depends_on:
-      - mysql-container
-      - eureka-server
+      eureka-server:
+        condition: service_healthy
+      mysql-container:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_JSON: '{
       "flyway.enabled": "true",
@@ -112,14 +118,16 @@ services:
       "eureka.client.registerWithEureka": "true",
       "eureka.client.fetchRegistry": "true"
       }'
-    restart: always
+    restart: on-failure
   customer-service:
     image: customer-service:latest
     ports:
       - 8087:8087
     depends_on:
-      - mysql-container
-      - eureka-server
+      eureka-server:
+        condition: service_healthy
+      mysql-container:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_JSON: '{
       "flyway.enabled": "true",
@@ -138,13 +146,14 @@ services:
       "eureka.client.registerWithEureka": "true",
       "eureka.client.fetchRegistry": "true"
       }'
-    restart: always
+    restart: on-failure
   zuul-service:
     image: zuul-service
     ports:
       - "8762:8762"
     depends_on:
-      - eureka-server
+      eureka-server:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_JSON: '{
       "server.port": "8762",
@@ -154,24 +163,26 @@ services:
       "eureka.client.registerWithEureka": "true",
       "eureka.client.fetchRegistry": "true",
       "zuul.routes.bank-service.path" :  "/bank/**",
-      "zuul.routes.bank-service.url" :  "http://localhost:8085/bank",
+      "zuul.routes.bank-service.url" :  "http://bank-service:8085/bank",
       "zuul.routes.branch-service.path" :  "/branch/**",
-      "zuul.routes.branch-service.url" :  "http://localhost:8086/branch",
+      "zuul.routes.branch-service.url" :  "http://branch-service:8086/branch",
       "zuul.routes.customer-service.path" :  "/customer/**",
-      "zuul.routes.customer-service.url" :  "http://localhost:8087/customer",
+      "zuul.routes.customer-service.url" :  "http://customer-service:8087/customer",
       "zuul.routes.transaction-service.path" :  "/transaction/**",
-      "zuul.routes.transaction-service.url" :  "http://localhost:8088/transaction",
+      "zuul.routes.transaction-service.url" :  "http://transaction-service:8088/transaction",
       "zuul.routes.account-service.path" :  "/account/**",
-      "zuul.routes.account-service.url" :  "http://localhost:8089/account"
+      "zuul.routes.account-service.url" :  "http://account-service:8089/account"
           }'
-    restart: always
+    restart: on-failure
   transaction-service:
     image: transaction-service:latest
     ports:
       - 8088:8088
     depends_on:
-      - mysql-container
-      - eureka-server
+      eureka-server:
+        condition: service_healthy
+      mysql-container:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_JSON: '{
       "flyway.enabled": "true",
@@ -190,4 +201,4 @@ services:
       "eureka.client.registerWithEureka": "true",
       "eureka.client.fetchRegistry": "true"
       }'
-    restart: always
+    restart: on-failure
