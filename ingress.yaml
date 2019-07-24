@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: "bank-ingress"
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+  labels:
+    app: bank-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /bank/*
+            backend:
+              serviceName: "bank-service"
+              servicePort: 8085
+          - path: /branch/*
+            backend:
+              serviceName: "branch-service"
+              servicePort: 8086
+          - path: /customer/*
+            backend:
+              serviceName: "customer-service"
+              servicePort: 8087
+          - path: /account/*
+            backend:
+              serviceName: "account-service"
+              servicePort: 8089
+          - path: /transaction/*
+              backend:
+                serviceName: "transaction-service"
+                servicePort: 8088

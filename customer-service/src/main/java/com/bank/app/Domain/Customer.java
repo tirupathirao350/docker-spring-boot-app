@@ -137,6 +137,7 @@ public class Customer {
                 ", contactNumber=" + contactNumber +
                 ", aadharNumber='" + aadharNumber + '\'' +
                 ", address=" + address +
+                ", branch:" + branch +
                 '}';
     }
 }

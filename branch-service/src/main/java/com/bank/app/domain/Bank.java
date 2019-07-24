@@ -73,7 +73,7 @@ public class Bank {
 
     @Override
     public String toString() {
-        return "Bank{" +
+        return " {" +
                 "bankId=" + bankId +
                 ", name='" + name + '\'' +
                 '}';

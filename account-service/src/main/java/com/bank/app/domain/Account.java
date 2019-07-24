@@ -136,6 +136,7 @@ public class Account {
                 ", status='" + status + '\'' +
                 ", createdDate='" + createdDate + '\'' +
                 ", closeDate='" + closeDate + '\'' +
+                ", customer=" + customer +
                 '}';
     }
 

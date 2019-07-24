@@ -26,6 +26,7 @@ public class Branch {
 
     private String branchName;
     private String branchType;
+    private int bankId;
 
     @OneToMany(mappedBy = "branch")
     @JsonManagedReference
@@ -35,11 +36,11 @@ public class Branch {
         super();
     }
 
-    public Branch(int branchCode, String branchName, String branchType, List<Customer> customerList) {
-        super();
+    public Branch(int branchCode, String branchName, String branchType, int bankId, List<Customer> customerList) {
         this.branchCode = branchCode;
         this.branchName = branchName;
         this.branchType = branchType;
+        this.bankId = bankId;
         this.customerList = customerList;
     }
 
@@ -67,11 +68,29 @@ public class Branch {
         this.branchType = branchType;
     }
 
+    public int getBankId() {
+        return bankId;
+    }
+
+    public void setBankId(int bankId) {
+        this.bankId = bankId;
+    }
+
     public List<Customer> getCustomerList() {
         return customerList;
     }
 
     public void setCustomerList(List<Customer> customerList) {
         this.customerList = customerList;
+    }
+
+    @Override
+    public String toString() {
+        return " {" +
+                "branchCode:" + branchCode +
+                ", branchName:'" + branchName + '\'' +
+                ", branchType:'" + branchType + '\'' +
+                ", bankId:'" + bankId + '\'' +
+                '}';
     }
 }
