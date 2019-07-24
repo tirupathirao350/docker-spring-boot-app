@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: bank-service
+  name: bank-service
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8085
+  selector:
+    app: bank-service
+  type: NodePort
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: branch-service
+  name: branch-service
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8086
+  selector:
+    app: branch-service
+  type: NodePort
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: customer-service
+  name: customer-service
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8087
+  selector:
+    app: customer-service
+  type: NodePort
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: account-service
+  name: account-service
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8089
+  selector:
+    app: account-service
+  type: NodePort
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: transaction-service
+  name: transaction-service
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8088
+  selector:
+    app: transaction-service
+  type: NodePort
+
+---
+  
+  
+  
+  
+  

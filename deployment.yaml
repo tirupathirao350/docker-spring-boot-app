@@ -1,0 +1,79 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: bank-service
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: bank-service
+    spec:
+      containers:
+        - name: bank-service
+          image: 092390458462.dkr.ecr.us-east-1.amazonaws.com/bank-service:latest
+-----
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: branch-service
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: branch-service
+    spec:
+      containers:
+        - name: branch-service
+          image: 092390458462.dkr.ecr.us-east-1.amazonaws.com/branch-service:latest
+-----
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: customer-service
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: customer-service
+    spec:
+      containers:
+        - name: customer-service
+          image: 092390458462.dkr.ecr.us-east-1.amazonaws.com/customer-service:latest
+-----
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: account-service
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: account-service
+    spec:
+      containers:
+        - name: account-service
+          image: 092390458462.dkr.ecr.us-east-1.amazonaws.com/account-service:latest
+-----
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: transaction-service
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: transaction-service
+    spec:
+      containers:
+        - name: transaction-service
+          image: 092390458462.dkr.ecr.us-east-1.amazonaws.com/transaction-service:latest
+
