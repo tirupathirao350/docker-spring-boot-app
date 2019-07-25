@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: bank-service
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -11,14 +11,14 @@ spec:
     spec:
       containers:
         - name: bank-service
-          image: 092390458462.dkr.ecr.us-east-1.amazonaws.com/bank-service:latest
+          image: 092390458462.dkr.ecr.us-west-2.amazonaws.com/bank-service:latest
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: branch-service
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -26,14 +26,14 @@ spec:
     spec:
       containers:
         - name: branch-service
-          image: 092390458462.dkr.ecr.us-east-1.amazonaws.com/branch-service:latest
+          image: 092390458462.dkr.ecr.us-west-2.amazonaws.com/branch-service:latest
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: customer-service
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -41,14 +41,14 @@ spec:
     spec:
       containers:
         - name: customer-service
-          image: 092390458462.dkr.ecr.us-east-1.amazonaws.com/customer-service:latest
+          image: 092390458462.dkr.ecr.us-west-2.amazonaws.com/customer-service:latest
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: account-service
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -56,14 +56,14 @@ spec:
     spec:
       containers:
         - name: account-service
-          image: 092390458462.dkr.ecr.us-east-1.amazonaws.com/account-service:latest
+          image: 092390458462.dkr.ecr.us-west-2.amazonaws.com/account-service:latest
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: transaction-service
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -71,4 +71,4 @@ spec:
     spec:
       containers:
         - name: transaction-service
-          image: 092390458462.dkr.ecr.us-east-1.amazonaws.com/transaction-service:latest
+          image: 092390458462.dkr.ecr.us-west-2.amazonaws.com/transaction-service:latest
