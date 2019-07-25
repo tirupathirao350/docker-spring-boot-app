@@ -19,25 +19,25 @@ pipeline{
              withDockerRegistry(credentialsId: 'ecr:us-east-1:aws-credentials', url: 'http://092390458462.dkr.ecr.us-east-1.amazonaws.com/bank-service') {
              sh 'docker tag anil9848/bank-service:latest 092390458462.dkr.ecr.us-east-1.amazonaws.com/bank-service'
              sh 'docker push 092390458462.dkr.ecr.us-east-1.amazonaws.com/bank-service'
-
+            }
              withDockerRegistry(credentialsId: 'ecr:us-east-1:aws-credentials', url: 'http://092390458462.dkr.ecr.us-east-1.amazonaws.com/branch-service') {
              sh 'docker tag anil9848/branch-service:latest 092390458462.dkr.ecr.us-east-1.amazonaws.com/branch-service'
              sh 'docker push 092390458462.dkr.ecr.us-east-1.amazonaws.com/branch-service'
-
+            }
              withDockerRegistry(credentialsId: 'ecr:us-east-1:aws-credentials', url: 'http://092390458462.dkr.ecr.us-east-1.amazonaws.com/customer-service') {
              sh 'docker tag anil9848/customer-service:latest 092390458462.dkr.ecr.us-east-1.amazonaws.com/customer-service'
              sh 'docker push 092390458462.dkr.ecr.us-east-1.amazonaws.com/customer-service'
-
+            }
              withDockerRegistry(credentialsId: 'ecr:us-east-1:aws-credentials', url: 'http://092390458462.dkr.ecr.us-east-1.amazonaws.com/account-service') {
              sh 'docker tag anil9848/account-service:latest 092390458462.dkr.ecr.us-east-1.amazonaws.com/account-service'
              sh 'docker push 092390458462.dkr.ecr.us-east-1.amazonaws.com/account-service'
-
+            }
              withDockerRegistry(credentialsId: 'ecr:us-east-1:aws-credentials', url: 'http://092390458462.dkr.ecr.us-east-1.amazonaws.com/transaction-service') {
              sh 'docker tag anil9848/transaction-service:latest 092390458462.dkr.ecr.us-east-1.amazonaws.com/transaction-service'
              sh 'docker push 092390458462.dkr.ecr.us-east-1.amazonaws.com/transaction-service'
-             }
+            }
           }
-        }
+    }
         stage('Run docker images on kubernetes cluster') {
           steps {
             node('EKS-master'){
