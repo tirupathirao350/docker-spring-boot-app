@@ -28,6 +28,6 @@ spec:
               serviceName: "account-service"
               servicePort: 8089
           - path: /transaction/*
-              backend:
-                serviceName: "transaction-service"
-                servicePort: 8088
+            backend:
+              serviceName: "account-service"
+              servicePort: 8089
