@@ -1,3 +1,4 @@
+/*
 package com.bank.app.repository;
 
 import com.bank.app.domain.Bank;
@@ -12,3 +13,4 @@ public interface BranchServiceProxy {
     @RequestMapping("/bank/getAllBanks")
     public Collection<Bank> findAll();
 }
+*/
