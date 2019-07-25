@@ -7,7 +7,14 @@ pipeline{
         checkout scm
       }
     }
-    stage('Push image to aws ecr'){
+    stage('Build and Generate Docker Images') {
+      steps {
+        sh 'mvn -B -DskipTests clean package'
+        sh 'echo $USER'
+        sh 'echo whoami'
+      }
+    }
+    stage('Push images to aws ecr'){
           steps {
              withDockerRegistry(credentialsId: 'ecr:us-east-1:aws-credentials', url: 'http://092390458462.dkr.ecr.us-east-1.amazonaws.com/bank-service') {
              sh 'docker tag anil9848/bank-service:latest 092390458462.dkr.ecr.us-east-1.amazonaws.com/bank-service'
@@ -31,10 +38,9 @@ pipeline{
              }
           }
         }
-        stage('Run docker image on kubernetes cluster') {
+        stage('Run docker images on kubernetes cluster') {
           steps {
             node('EKS-master'){
-              checkout scm
              sh 'kubectl apply -f deployment.yaml'
              sh 'kubectl apply -f service.yaml'
              sh 'kubectl apply -f ingress.yaml'
