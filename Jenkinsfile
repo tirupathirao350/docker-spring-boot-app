@@ -41,7 +41,8 @@ pipeline{
         stage('Run docker images on kubernetes cluster') {
           steps {
             node('EKS-master'){
-            withDockerRegistry(credentialsId: 'ecr:us-east-2:aws-credentials'){
+            Use Jenkins UsernamePassword credentials information (Username: AccessKeyId, Password: SecretAccessKey):    
+             withAWS(credentials:'aws-credentials') {
               checkout scm
              sh 'export KUBECONFIG=~/.kube/config'
              sh 'kubectl apply -f deployment.yaml'
