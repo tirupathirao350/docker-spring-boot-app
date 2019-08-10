@@ -20,7 +20,7 @@ pipeline {
     }
     stage('Run docker images with docker-compose') {
       steps {
-        node('EKS-master'){
+        node('docker'){
           checkout scm
          sh 'docker-compose up -d'
         }
