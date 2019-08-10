@@ -1,0 +1,236 @@
+EKSCTL-Ingress Documentation:
+--------------------------------------------------------------------------------------------------------
+iam-authencator installation:
+
+curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.13.7/2019-06-11/bin/linux/amd64/aws-iam-authenticator
+curl -o aws-iam-authenticator.sha256 https://amazon-eks.s3-us-west-2.amazonaws.com/1.13.7/2019-06-11/bin/linux/amd64/aws-iam-authenticator.sha256
+openssl sha1 -sha256 aws-iam-authenticator
+chmod +x ./aws-iam-authenticator
+mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$HOME/bin:$PATH
+echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
+aws-iam-authenticator help
+--------------------------------------------------------------------------------------------------------
+eks installation:
+
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
+eksctl version
+--------------------------------------------------------------------------------------------------------
+kubectl installation:
+
+curl -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.13.7/2019-06-11/bin/linux/amd64/kubectl
+curl -o kubectl.sha256 https://amazon-eks.s3-us-west-2.amazonaws.com/1.13.7/2019-06-11/bin/linux/amd64/kubectl.sha256
+openssl sha1 -sha256 kubectl
+chmod +x ./kubectl
+cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH
+echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
+kubectl version --short --client
+--------------------------------------------------------------------------------------------------------
+Configure AWS:
+
+aws configure - (provide your AccessKey and Secret AcceessID)
+--------------------------------------------------------------------------------------------------------
+cluster creation:
+
+eksctl create cluster \
+--name prod \
+--version 1.13 \
+--nodegroup-name standard-workers \
+--node-type t3.medium \
+--nodes 4 \
+--nodes-min 1 \
+--nodes-max 6 \
+--node-ami auto
+
+
+Node Status =========> kubectl get nodes
+--------------------------------------------------------------------------------------------------------
+
+configure below IAM-Policy to the worker node:
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "acm:DescribeCertificate",
+        "acm:ListCertificates",
+        "acm:GetCertificate"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:CreateSecurityGroup",
+        "ec2:CreateTags",
+        "ec2:DeleteTags",
+        "ec2:DeleteSecurityGroup",
+        "ec2:DescribeInstances",
+        "ec2:DescribeInstanceStatus",
+        "ec2:DescribeSecurityGroups",
+        "ec2:DescribeSubnets",
+        "ec2:DescribeTags",
+        "ec2:DescribeVpcs",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:ModifyNetworkInterfaceAttribute",
+        "ec2:RevokeSecurityGroupIngress",
+        "ec2:DescribeAccountAttributes",
+        "ec2:DescribeAddresses",
+        "ec2:DescribeInternetGateways",
+        "iam:CreateServiceLinkedRole"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "elasticloadbalancing:AddTags",
+        "elasticloadbalancing:CreateListener",
+        "elasticloadbalancing:CreateLoadBalancer",
+        "elasticloadbalancing:CreateRule",
+        "elasticloadbalancing:CreateTargetGroup",
+        "elasticloadbalancing:DeleteListener",
+        "elasticloadbalancing:DeleteLoadBalancer",
+        "elasticloadbalancing:DeleteRule",
+        "elasticloadbalancing:DeleteTargetGroup",
+        "elasticloadbalancing:DeregisterTargets",
+        "elasticloadbalancing:DescribeListeners",
+        "elasticloadbalancing:DescribeLoadBalancers",
+        "elasticloadbalancing:DescribeLoadBalancerAttributes",
+        "elasticloadbalancing:DescribeRules",
+        "elasticloadbalancing:DescribeSSLPolicies",
+        "elasticloadbalancing:DescribeTags",
+        "elasticloadbalancing:DescribeTargetGroups",
+        "elasticloadbalancing:DescribeTargetGroupAttributes",
+        "elasticloadbalancing:DescribeTargetHealth",
+        "elasticloadbalancing:ModifyListener",
+        "elasticloadbalancing:ModifyLoadBalancerAttributes",
+        "elasticloadbalancing:ModifyRule",
+        "elasticloadbalancing:ModifyTargetGroup",
+        "elasticloadbalancing:ModifyTargetGroupAttributes",
+        "elasticloadbalancing:RegisterTargets",
+        "elasticloadbalancing:RemoveTags",
+        "elasticloadbalancing:SetIpAddressType",
+        "elasticloadbalancing:SetSecurityGroups",
+        "elasticloadbalancing:SetSubnets",
+        "elasticloadbalancing:SetWebACL"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iam:GetServerCertificate",
+        "iam:ListServerCertificates"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "waf-regional:GetWebACLForResource",
+        "waf-regional:GetWebACL",
+        "waf-regional:AssociateWebACL",
+        "waf-regional:DisassociateWebACL"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "tag:GetResources",
+        "tag:TagResources"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "waf:GetWebACL"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+
+Name the policy as ingressController-iam-policy or any name 
+
+--------------------------------------------------------------------------------------------------------
+Configure RoleBasedAccessControl (rbac):
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.0.0/docs/examples/rbac-role.yaml
+--------------------------------------------------------------------------------------------------------
+Configure alb-ingress-controller:
+
+curl -sS "https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.0.0/docs/examples/alb-ingress-controller.yaml" > alb-ingress-controller.yaml
+
+vi alb-ingress-controller.yaml and replace cluster name with prod or any name that you configured
+
+kubectl apply -f alb-ingress-controller.yaml
+
+kubectl logs -n kube-system $(kubectl get po -n kube-system | egrep -o alb-ingress[a-zA-Z0-9-]+)
+
+It should able see the below logs:
+
+{
+-------------------------------------------------------------------------------
+AWS ALB Ingress controller
+  Release:    v1.0.0
+  Build:      git-c25bc6c5
+  Repository: https://github.com/kubernetes-sigs/aws-alb-ingress-controller
+-------------------------------------------------------------------------------
+
+W0721 07:39:08.717216       1 client_config.go:552] Neither --kubeconfig nor --master was specified.  Using the inClusterConfig.  This might not work.
+I0721 07:39:08.790305       1 :0] kubebuilder/controller "level"=0 "msg"="Starting EventSource"  "Controller"="alb-ingress-controller" "Source"={"Type":{"metadata":{"creationTimestamp":null},"spec":{},"status":{"loadBalancer":{}}}}
+I0721 07:39:08.790594       1 :0] kubebuilder/controller "level"=0 "msg"="Starting EventSource"  "Controller"="alb-ingress-controller" "Source"={"Type":{"metadata":{"creationTimestamp":null},"spec":{},"status":{"loadBalancer":{}}}}
+I0721 07:39:08.790757       1 :0] kubebuilder/controller "level"=0 "msg"="Starting EventSource"  "Controller"="alb-ingress-controller" "Source"={"Type":{"metadata":{"creationTimestamp":null}}}
+I0721 07:39:08.791002       1 :0] kubebuilder/controller "level"=0 "msg"="Starting EventSource"  "Controller"="alb-ingress-controller" "Source"={"Type":{"metadata":{"creationTimestamp":null},"spec":{},"status":{"daemonEndpoints":{"kubeletEndpoint":{"Port":0}},"nodeInfo":{"machineID":"","systemUUID":"","bootID":"","kernelVersion":"","osImage":"","containerRuntimeVersion":"","kubeletVersion":"","kubeProxyVersion":"","operatingSystem":"","architecture":""}}}}
+I0721 07:39:08.791285       1 leaderelection.go:185] attempting to acquire leader lease  kube-system/ingress-controller-leader-alb...
+I0721 07:39:08.800551       1 leaderelection.go:194] successfully acquired lease kube-system/ingress-controller-leader-alb
+I0721 07:39:08.900921       1 :0] kubebuilder/controller "level"=0 "msg"="Starting Controller"  "Controller"="alb-ingress-controller"
+I0721 07:39:09.001096       1 :0] kubebuilder/controller "level"=0 "msg"="Starting workers"  "Controller"="alb-ingress-controller" "WorkerCount"=1
+}
+
+
+--------------------------------------------------------------------------------------------------------
+Create Ingress-Service file as ingress.yaml and copy the below txt:
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: "test-ingress"
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+  labels:
+    app: test-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /employee/*
+            backend:
+              serviceName: "employee-service"
+              servicePort: 8082
+          - path: /address/*
+            backend:
+              serviceName: "address-service"
+              servicePort: 8083
+
+Note: different services can be configured to this file by appending path to the spec.rules 
+--------------------------------------------------------------------------------------------------------
+Deploy Ingress file:
+
+kubectl apply -f <ingress file Name>.yaml
+
+kubeconfigtl get ingress  (you should see something like below)
+NAME           HOSTS   ADDRESS                                                                 PORTS   AGE
+test-ingress   *       b5b41197-default-testingre-5bb0-378124631.us-west-2.elb.amazonaws.com   80      37m
+--------------------------------------------------------------------------------------------------------
+
+After few min hit the Address/path-name you can see the service data. 
+
+------------------------------------------- --END ---------------------------------------------------------
