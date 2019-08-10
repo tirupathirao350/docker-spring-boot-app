@@ -41,10 +41,13 @@ pipeline{
         stage('Run docker images on kubernetes cluster') {
           steps {
             node('EKS-master'){
-            checkout scm
+            withDockerRegistry(credentialsId: 'ecr:us-east-2:aws-credentials'){
+              checkout scm
+             sh 'export KUBECONFIG=~/.kube/config'
              sh 'kubectl apply -f deployment.yaml'
              sh 'kubectl apply -f service.yaml'
              sh 'kubectl apply -f ingress.yaml'
+            }
             }
           }
         }
