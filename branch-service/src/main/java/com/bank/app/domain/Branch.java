@@ -22,6 +22,7 @@ import lombok.Data;
 @Table(name = "branch")
 @Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//sample test
 public class Branch {
 
     @Id
