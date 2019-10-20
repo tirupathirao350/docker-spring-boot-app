@@ -20,10 +20,9 @@ pipeline {
     }
     stage('Run docker images with docker-compose') {
       steps {
-        node('docker'){
           checkout scm
          sh 'nohup docker-compose up &'
-        }
+      
       }
     }
   }
