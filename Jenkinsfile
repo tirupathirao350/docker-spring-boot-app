@@ -13,7 +13,7 @@ pipeline {
     }
     stage('Build Project and Generate Docker Images') {
       steps {
-        sh 'mvn -B -DskipTests clean package'
+        sh 'mvn clean install -DskipTests'
         sh 'echo $USER'
         sh 'echo whoami'
       }
@@ -22,7 +22,7 @@ pipeline {
       steps {
         node('docker'){
           checkout scm
-         sh 'docker-compose up -d'
+         sh 'nohup docker-compose up &'
         }
       }
     }
