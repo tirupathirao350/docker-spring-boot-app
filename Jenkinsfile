@@ -13,7 +13,7 @@ pipeline {
     }
     stage('Build Project and Generate Docker Images') {
       steps {
-        node('EKS-master'){    
+        node('Docker'){    
               checkout scm
         sh 'mvn clean install -DskipTests'
         sh 'echo $USER'
@@ -43,9 +43,10 @@ pipeline {
     }
     stage('Run docker images with docker-compose') {
       steps {
+        node('Docker'){    
           checkout scm
          sh 'docker-compose up'
-      
+        }
       }
     }
   }
