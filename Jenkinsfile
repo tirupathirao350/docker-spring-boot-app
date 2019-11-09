@@ -13,9 +13,12 @@ pipeline {
     }
     stage('Build Project and Generate Docker Images') {
       steps {
+        node('EKS-master'){    
+              checkout scm
         sh 'mvn clean install -DskipTests'
         sh 'echo $USER'
         sh 'echo whoami'
+        }
       }
     }
      stage('Push images to aws ecr'){
