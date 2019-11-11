@@ -12,12 +12,9 @@ pipeline {
     }
     stage('Build Project and Generate Docker Images') {
       steps {
-        node('Docker'){    
-              checkout scm
         sh 'mvn clean install -DskipTests'
         sh 'echo $USER'
         sh 'echo whoami'
-        }
       }
     }
      stage('Push images to aws ecr'){
