@@ -20,7 +20,7 @@ pipeline{
     }
     stage('Push images to aws ecr'){
           steps {
-            withDockerRegistry(credentialsId: 'ecr:us-east-1:aws-credentials', url: 'http://742108982556.dkr.ecr.us-east-1.amazonaws.com/account-service') {
+            withDockerRegistry(credentialsId: 'ecr:us-east-1:aws-cred', url: 'http://742108982556.dkr.ecr.us-east-1.amazonaws.com/account-service') {
              sh 'docker tag bank-service:latest 742108982556.dkr.ecr.us-east-1.amazonaws.com/bank-service'
              sh 'docker push 742108982556.dkr.ecr.us-east-1.amazonaws.com/bank-service'
 
