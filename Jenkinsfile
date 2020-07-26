@@ -18,7 +18,7 @@ pipeline {
     }
     stage('Run docker images with docker-compose') {
       steps {
-         sh 'nohup docker-compose up &'
+         sh 'docker-compose up'
       }
     }
   }
