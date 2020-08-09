@@ -11,7 +11,9 @@ spec:
     spec:
       containers:
         - name: bank-service
-          image: 742108982556.dkr.ecr.us-east-1.amazonaws.com/bank-service:latest
+          image: 349229500297.dkr.ecr.us-east-1.amazonaws.com/bank-service:latest
+      nodeSelector:
+        disktype: ssd
 --- 
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -26,7 +28,9 @@ spec:
     spec:
       containers:
         - name: branch-service
-          image: 742108982556.dkr.ecr.us-east-1.amazonaws.com/branch-service:latest
+          image: 349229500297.dkr.ecr.us-east-1.amazonaws.com/branch-service:latest
+      nodeSelector:
+        disktype: ssd
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -41,7 +45,9 @@ spec:
     spec:
       containers:
         - name: customer-service
-          image: 742108982556.dkr.ecr.us-east-1.amazonaws.com/customer-service:latest
+          image: 349229500297.dkr.ecr.us-east-1.amazonaws.com/customer-service:latest
+      nodeSelector:
+        disktype: hdd
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -56,7 +62,9 @@ spec:
     spec:
       containers:
         - name: account-service
-          image: 742108982556.dkr.ecr.us-east-1.amazonaws.com/account-service:latest
+          image: 349229500297.dkr.ecr.us-east-1.amazonaws.com/account-service:latest
+      nodeSelector:
+        disktype: ssd
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -71,4 +79,6 @@ spec:
     spec:
       containers:
         - name: transaction-service
-          image: 742108982556.dkr.ecr.us-east-1.amazonaws.com/transaction-service:latest
+          image: 349229500297.dkr.ecr.us-east-1.amazonaws.com/transaction-service:latest
+      nodeSelector:
+        disktype: hdd
