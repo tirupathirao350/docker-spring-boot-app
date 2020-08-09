@@ -1,9 +1,12 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: bank-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: bank-service
   template:
     metadata:
       labels:
@@ -14,13 +17,16 @@ spec:
           image: 349229500297.dkr.ecr.us-east-1.amazonaws.com/bank-service:latest
       nodeSelector:
         disktype: ssd
---- 
-apiVersion: extensions/v1beta1
+---
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: branch-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: branch-service
   template:
     metadata:
       labels:
@@ -32,12 +38,15 @@ spec:
       nodeSelector:
         disktype: ssd
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: customer-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: customer-service
   template:
     metadata:
       labels:
@@ -49,12 +58,15 @@ spec:
       nodeSelector:
         disktype: hdd
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: account-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: account-service
   template:
     metadata:
       labels:
@@ -66,12 +78,15 @@ spec:
       nodeSelector:
         disktype: ssd
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: transaction-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: transaction-service
   template:
     metadata:
       labels:
