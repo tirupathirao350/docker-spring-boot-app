@@ -42,7 +42,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d16e1a48-1bd4-4f5a-9f8c-023a3eaa095e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/Jenkinsfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,5 +205,9 @@
     </state>
     <state width="302" height="384" key="Git.Branch.Popup/0.0.1366.728@0.0.1366.728" timestamp="1596970776593" />
     <state width="178" height="380" key="Git.Branch.Popup/0.0.1366.768" timestamp="1596969523445" />
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1596984125402">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1596984125402" />
   </component>
 </project>
