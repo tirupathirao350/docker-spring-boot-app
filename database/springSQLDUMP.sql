@@ -11,7 +11,7 @@ LOCK TABLES `bank` WRITE;
 /*!40000 ALTER TABLE `bank` DISABLE KEYS */;
 
 --
--- Dumping data for table `bank`
+-- Dumping data for table `bank`  sample test
 --
 
 INSERT INTO `bank` VALUES (1,'SBI'),(2,'HDFC'),(3,'CANARA'),(4,'AXIS'),(5,'ANDHRA'),(6,'PNB'),(7,'PB'),(8,'PCB');
