@@ -1,16 +1,23 @@
 properties([pipelineTriggers([githubPush()])])
+
 pipeline{
   agent any
-  tools { 
+  tools {
         maven 'MAVEN_HOME'
         jdk 'JAVA_HOME'
   }
   stages {
-    stage('Clone repository') {
-        /* Let's make sure we have the repository cloned to our workspace... */
-      steps {
-        checkout scm
-      }
+    stage('Checkout SCM') {
+        steps {
+            checkout([
+             $class: 'GitSCM',
+             branches: [[name: 'feature-1.1']],
+             userRemoteConfigs: [[
+             url: 'git@github.com:anilkumar23/docker-spring-boot-app.git',
+                credentialsId: '',
+             ]]
+            ])
+        }
     }
     stage('Build and Generate Docker Images') {
       steps {
