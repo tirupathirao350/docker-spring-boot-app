@@ -1,5 +1,4 @@
 properties([pipelineTriggers([githubPush()])])
-
 pipeline{
   agent any
   tools {
@@ -7,17 +6,11 @@ pipeline{
         jdk 'JAVA_HOME'
   }
   stages {
-    stage('Checkout SCM') {
-        steps {
-            checkout([
-             $class: 'GitSCM',
-             branches: [[name: 'feature-1.1']],
-             userRemoteConfigs: [[
-             url: 'git@github.com:anilkumar23/docker-spring-boot-app.git',
-                credentialsId: '',
-             ]]
-            ])
-        }
+    stage('Clone repository') {
+        /* Let's make sure we have the repository cloned to our workspace... */
+      steps {
+        checkout scm
+      }
     }
     stage('Build and Generate Docker Images') {
       steps {
@@ -55,8 +48,6 @@ pipeline{
              sh 'aws eks --region us-east-1 update-kubeconfig --name terraform-eks-demo'
              sh 'kubectl apply -f deployment.yaml'
              sh 'kubectl apply -f service.yaml'
-             sh 'kubectl apply -f ingress.yaml'
-            
             }
           }
         }
