@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: bank-service
-          image: 349229500297.dkr.ecr.us-east-1.amazonaws.com/bank-service:latest
+          image: public.ecr.aws/l0y4l6w6/bank-service:latest
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: branch-service
-          image: 349229500297.dkr.ecr.us-east-1.amazonaws.com/branch-service:latest
+          image: public.ecr.aws/l0y4l6w6/branch-service:latest
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -50,7 +50,7 @@ spec:
     spec:
       containers:
         - name: customer-service
-          image: 349229500297.dkr.ecr.us-east-1.amazonaws.com/customer-service:latest
+          image: public.ecr.aws/l0y4l6w6/customer-service:latest
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -68,7 +68,7 @@ spec:
     spec:
       containers:
         - name: account-service
-          image: 349229500297.dkr.ecr.us-east-1.amazonaws.com/account-service:latest
+          image: public.ecr.aws/l0y4l6w6/account-service:latest
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -86,4 +86,4 @@ spec:
     spec:
       containers:
         - name: transaction-service
-          image: 349229500297.dkr.ecr.us-east-1.amazonaws.com/transaction-service:latest
+          image: public.ecr.aws/l0y4l6w6/transaction-service:latest
