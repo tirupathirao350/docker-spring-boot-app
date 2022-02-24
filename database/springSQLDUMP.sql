@@ -1,4 +1,4 @@
-use spring_app_db ;
+use sample ;
 
 DROP TABLE IF EXISTS `bank`;
  SET character_set_client = utf8mb4 ;
